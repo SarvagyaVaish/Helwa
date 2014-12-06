@@ -1,6 +1,10 @@
 .idea
 *.pyc
 
+helwa-webapp/123.json
+sandbox/data.json
+sandbox/data.txt
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

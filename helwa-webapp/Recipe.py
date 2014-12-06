@@ -10,8 +10,7 @@ class Recipe:
 	nutrition = ""
 
 	def __init__(self, url):
-		self.url = url
-		page = urllib2.urlopen(self.url).read()
+		page = urllib2.urlopen(url).read()
 		Recipe.soup = BeautifulSoup(page)
 	
 	def strip_tags(self, snippet, invalid_tags):
