@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, 'libs')
+
 from bs4 import BeautifulSoup, element, NavigableString
 import urllib2, re
 
@@ -60,34 +63,34 @@ class Recipe:
 
 
 ################# TESTING #################################
-test1 = Recipe('http://www.foodnetwork.com/recipes/food-network-kitchens/glazed-salmon-with-spiced-carrots-recipe.html')
-print test1.getTitle()
-print "Ingredients"
-for i in test1.ScrapeIngredients():
-	print i
-print
-print "Directions"
-for i in test1.ScrapeDirections():
-	print i
-if test1.getNutrition():
-	print "Nutritional Info"
-	print test1.getNutrition()
+# test1 = Recipe('http://www.foodnetwork.com/recipes/food-network-kitchens/glazed-salmon-with-spiced-carrots-recipe.html')
+# print test1.getTitle()
+# print "Ingredients"
+# for i in test1.ScrapeIngredients():
+# 	print i
+# print
+# print "Directions"
+# for i in test1.ScrapeDirections():
+# 	print i
+# if test1.getNutrition():
+# 	print "Nutritional Info"
+# 	print test1.getNutrition()
 
 # print len(test1.ScrapeDirections())
 
-print
-print
+# print
+# print
 
-test2 = Recipe('http://www.foodnetwork.com/recipes/food-network-kitchens/classic-glazed-ham-recipe.html')
-print test2.getTitle()
-print "Ingredients"
-for i in test2.ScrapeIngredients():
-	print i
-print
-print "Directions"
-for i in test2.ScrapeDirections():
-	print i
-if test2.getNutrition():
-	print "Nutritional Info"
-	print test2.getNutrition()
+# test2 = Recipe('http://www.foodnetwork.com/recipes/food-network-kitchens/classic-glazed-ham-recipe.html')
+# print test2.getTitle()
+# print "Ingredients"
+# for i in test2.ScrapeIngredients():
+# 	print i
+# print
+# print "Directions"
+# for i in test2.ScrapeDirections():
+# 	print i
+# if test2.getNutrition():
+# 	print "Nutritional Info"
+# 	print test2.getNutrition()
 

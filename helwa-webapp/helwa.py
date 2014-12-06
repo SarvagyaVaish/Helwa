@@ -2,6 +2,8 @@
 import os
 import urllib
 
+from Recipe import Recipe
+
 from google.appengine.api import users
 from google.appengine.ext import ndb
 
@@ -44,9 +46,14 @@ class RecipeEnginePage(webapp2.RequestHandler):
         ##        Fetch Recipe        ##
         ################################
 
+        r = Recipe(recipeUrl)
 
         template_values = {
-            'RecipeUrl': recipeUrl
+            'RecipeUrl': recipeUrl,
+            'title': r.getTitle(),
+            'ingredients': r.ScrapeIngredients(),
+            'directions': r.ScrapeDirections(),
+            'nutrition': r.getNutrition()
         }
 
         template = JINJA_ENVIRONMENT.get_template('RecipeEnginePage.html')

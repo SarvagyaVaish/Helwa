@@ -4,5 +4,34 @@
         RecipeEnginePage
         <br>
         <b>{{ RecipeUrl }}</b>
+        <br>
+        <br>
+        <b>Recipe Title:</b> {{ title }}
+        <br>
+        <br>
+
+        <b>Recipe Ingredients: </b>
+        <br>
+        <ul>
+        {% for i in ingredients %}
+        	<li>{{ i }}</li>
+        {% endfor %}
+    	</ul>
+
+    	<b>Recipe Directions: </b>
+        <br>
+        <ul>
+        {% for i in directions %}
+        	<li>{{ i }}</li>
+        {% endfor %}
+    	</ul>
+
+    	<br>
+    	{% if nutrition %}
+        <b>Nutrition:</b> {{ nutrition }}
+        {% endif %}
+        
+
+
     </body>
 </html>
