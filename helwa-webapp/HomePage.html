@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+	<!-- JQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+	<!-- Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	
+	<div class="container-fluid">
+
+		<!-- Helwa title -->
+		<div class="jumbotron">
+			<h1 class='text-center'>Helwa</h1>
+			<p class='text-center'>Beautiful Visual Recipes</p>
+		</div>
+
+		<!-- Spacer -->
+		<div style="height: 105px; width: 100%; font-size: 0; margin: 0; <padding: 0; border: 0; display: block; "></div>
+
+		<!-- Form to accept URL -->
+		<form class="form-horizontal" role="form" action="/RecipeEngine" method="post">
+			<div class="form-group">
+				<label for="recipe_url" class="col-xs-2 col-sm-2 col-sm-offset-2 control-label">Recipe URL</label>
+				<div class="col-xs-8 col-sm-4">
+					<input type="url" class="form-control" id="recipe_url" name="recipe_url" placeholder="http://www.foodnetwork.com/recipes ..." required autofocus autocomplete="off">
+				</div>
+				<div class="col-xs-2 col-sm-2">
+					<button type="submit" class="btn btn-default">Create</button>
+				</div>
+			</div>
+		</form>
+
+	</div> <!-- container-fluid -->
+
+</body>
+
+</html>
