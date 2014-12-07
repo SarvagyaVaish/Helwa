@@ -18,5 +18,9 @@ function UpdateIngredient(id) {
     name =   $('#name'+id).val();
 	RecipeModel.UpdateIngredients(id, amount, unit, name);
 	$('#'+id).popover('hide');
+
+    // RePopulate the ingredients list
+    DynamicHtmlGenerator.RepopulateIngredientsList(RecipeModel.GetIngredients());
+
     return false;
 }
