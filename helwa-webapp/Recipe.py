@@ -22,8 +22,8 @@ class Recipe:
 
     def __init__(self, url):
         self.m_Url = url
-        m_Page = urllib2.urlopen(self.m_Url).read()
-        Recipe.soup = BeautifulSoup(m_Page)
+        self.m_Page = urllib2.urlopen(self.m_Url).read()
+        Recipe.soup = BeautifulSoup(self.m_Page)
     
     def strip_tags(self, snippet, invalid_tags):
         for tag in snippet:
@@ -117,13 +117,13 @@ class Recipe:
     # Returns a list of dictionaries with id and sentence of each POS tagged sentence
     def SplitDirections(self):
         # Split sentences
-        m = re.sub(r'\/\.\s*', '\n', self.m_TaggedDirectionString)
+        m = re.sub(r'\/\.\s|\/;\s', '\n', self.m_TaggedDirectionString)
         sentenceList = re.split('\n', m)
         i = 0
         for sentence in sentenceList:
             directionDictionary = {}
             directionDictionary['id'] = 'direction' + str(i)
-            directionDictionary['prettySentence'] = re.sub(r'\/[A-Z]{2,3}|\/.|\/,','', sentence)
+            directionDictionary['prettySentence'] = re.sub(r'\/[A-Z]{2,3}|\/\.|\/,','', sentence)
             directionDictionary['sentence'] = sentence
             self.m_SplitDirections.append(directionDictionary)
             i = i + 1
@@ -159,7 +159,7 @@ class Recipe:
 
 
     def getDirections(self):
-        return m_SplitDirections
+        return self.m_SplitDirections
 
 
     def setStructuredIngredients(self, ingredients):
