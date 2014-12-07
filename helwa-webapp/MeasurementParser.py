@@ -69,7 +69,7 @@ class MeasurementParser:
             #############################
 
             idInt = idInt + 1
-            idString = str(idInt)
+            idString = 'ingredient' + str(idInt)
 
 
             #############################
