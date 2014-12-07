@@ -118,6 +118,7 @@ class Recipe:
         for sentence in sentenceList:
             directionDictionary = {}
             directionDictionary['id'] = i
+            directionDictionary['prettySentence'] = re.sub(r'\/[A-Z]{2,3}|\/.|\/,','', sentence)
             directionDictionary['sentence'] = sentence
             self.m_SplitDirections.append(directionDictionary)
             i = i + 1

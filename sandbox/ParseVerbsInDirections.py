@@ -42,7 +42,7 @@ class Recipe:
         },
         {
         'id': 1,
-        'sentence': "Serve/NNP the/DT salmon/NN with/IN the/DT carrots/NNS and/CC lime/VB wedges/NNS ./"
+        'sentence': "Serve/NNP the/DT salmon/NN with/IN the/DT carrots/NNS and/CC lime/VB wedges/NNS ./."
         }
     ]
 
@@ -58,6 +58,11 @@ class Recipe:
             directionDict = self.m_DirectionsList[i]
             directionString = directionDict["sentence"]
 
+            prettySentence = directionString
+            prettySentence = re.sub(r'\/[A-Z]{2,3}|\/.|\/,','', prettySentence)
+
+            print prettySentence
+
             directionDict['action-nodes'] = []
 
             matchResultsIt = self.m_SentencePattern.finditer(directionString)
@@ -68,8 +73,8 @@ class Recipe:
 
             self.m_DirectionsList[i] = directionDict
 
-        pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(self.m_DirectionsList)
+        # pp = pprint.PrettyPrinter(indent=4)
+        # pp.pprint(self.m_DirectionsList)
 
         return
 
