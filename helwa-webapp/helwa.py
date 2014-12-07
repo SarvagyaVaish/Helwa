@@ -17,9 +17,9 @@ import webapp2
 
 import logging
 
-import numpy
-from nltk import tokenize
-from nltk import tag
+# import numpy
+# from nltk import tokenize
+# from nltk import tag
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -79,10 +79,10 @@ class RecipeEnginePage(webapp2.RequestHandler):
 class NltkTestPage(webapp2.RequestHandler):
     def get(self):
 
-        text = tokenize.word_tokenize("And now for something completely different")
-        tags = tag.pos_tag(text)
+        # text = tokenize.word_tokenize("And now for something completely different")
+        # tags = tag.pos_tag(text)
         
-        logging.info(tags)
+        # logging.info(tags)
 
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write(tags)
