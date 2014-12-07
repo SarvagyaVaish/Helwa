@@ -12,7 +12,7 @@ class Recipe:
     m_Nutrition = ""
     m_Ingredients = []
     m_Url = ""
-    m_SplitDirections  = {}
+    m_SplitDirections  = []
 
     def __init__(self, url):
         self.m_Url = url
@@ -87,14 +87,23 @@ class Recipe:
         stringToDict = ast.literal_eval(resultString)
         logging.info(stringToDict)
         logging.info(stringToDict['result'])
-        return resultString
+        return stringToDict['result']
 
     # Splits tagged directions into by newlines
-    # Returns a dictionary with id and sentence for each sentence
+    # Returns a list of dictionaries with id and sentence of each POS tagged sentence
     def SplitDirections(self):
-
-
-        return
+        # Split sentences
+        m = re.sub(r'\/\.\s*', '\n', self.RunPosTaggerOnDirections())
+        logging.info(m)
+        sentenceList = re.split('\n', m)
+        i = 0
+        for sentence in sentenceList:
+            sentenceDictionary = {}
+            sentenceDictionary['id'] = i
+            sentenceDictionary['sentence'] = sentence
+            self.m_SplitDirections.append(sentenceDictionary)
+            i = i + 1
+        return self.m_SplitDirections
 
     # Find the VB* in the direction sentences
     # For each found verb, add a node to the corresponding dictionary
@@ -127,6 +136,8 @@ class Recipe:
 
 # logging.info(test1.RunPosTaggerOnDirections())
 # print test1.RunPosTaggerOnDirections()
+
+# logging.info(test1.SplitDirections())
 
 # print len(test1.ScrapeDirections())
 
