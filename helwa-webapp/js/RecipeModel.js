@@ -38,6 +38,17 @@ var RecipeModel = (function () {
 
         GetDirections: function() {
             return m_Directions;
+        },
+
+        UpdateIngredients: function(id, amount, unit, name) {
+            console.log(m_Ingredients);
+            for (i in m_Ingredients) {
+                if ( id == m_Ingredients[i]['id']) {
+                    m_Ingredients[i]['amount'] = amount;
+                    m_Ingredients[i]['unit'] = unit;
+                    m_Ingredients[i]['name'] = name;
+                }
+            }
         }
 
 

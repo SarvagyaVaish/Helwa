@@ -52,25 +52,8 @@
     {% endif %}
     
         
- <!--
-    <script id="ingredientPopoverTemplate" type="text/x-jQuery-tmpl">
-        <table class="table table-bordered">
-			<tr>
-				<td>
-					id: 
-				</td>
-				<td>
-					<a href="#">Test</a>
-				</td>
-				<td>
-					<a href="#">Test</a>
-				</td>
-			</tr>
-		</table>
-    </script>
--->
     <script id="ingredientTemplate" type="text/x-jQuery-tmpl">
-        <li><button type="button" class="btn btn-default" id=${id} data-toggle="popover" data-html="true" data-trigger="focus" data-container="body" > ${amount} ${unit} ${name} </a></li>
+        <li><a class="btn btn-default" id=${id} data-toggle="popover" data-html="true" data-container="body"> ${amount} ${unit} ${name} </a></li>
     </script>
     
     <!--
