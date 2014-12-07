@@ -1,4 +1,4 @@
-import json
+import json, pprint
 
 ingredients = [
  {
@@ -53,11 +53,18 @@ with open('data.json', 'w') as outfile:
 
 with open('data.json') as outfile:
 	data = json.load(outfile)
-	print data
-	print
+	# print data
+	# print
 	data.update(directions)
-	print data
+	# print data
 # data.update(directions)
 
 with open('data.json', 'w') as outfile:
 	data = json.dump(data, outfile)
+
+	
+pp = pprint.PrettyPrinter(indent=4)
+
+with open('data.json') as outfile:
+	data = json.load(outfile)
+	pp.pprint(data)

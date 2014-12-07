@@ -7,6 +7,7 @@
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
 
     <!-- Bootstrap JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
@@ -36,7 +37,12 @@
     <br>
 
     <b>Recipe Ingredients: </b>
+    <ul id="ingredients_placement">
+
+ 	</ul>
+    
     <br>
+
 
 	<b>Recipe Directions: </b>
     <br>
@@ -45,6 +51,38 @@
     <b>Nutrition:</b> {{ nutrition }}
     {% endif %}
     
+        
+ <!--
+    <script id="ingredientPopoverTemplate" type="text/x-jQuery-tmpl">
+        <table class="table table-bordered">
+			<tr>
+				<td>
+					id: 
+				</td>
+				<td>
+					<a href="#">Test</a>
+				</td>
+				<td>
+					<a href="#">Test</a>
+				</td>
+			</tr>
+		</table>
+    </script>
+-->
+    <script id="ingredientTemplate" type="text/x-jQuery-tmpl">
+        <li><button type="button" class="btn btn-default" id=${id} data-toggle="popover" data-html="true" data-trigger="focus" data-container="body" > ${amount} ${unit} ${name} </a></li>
+    </script>
+    
+    <!--
+    <script type="text/javascript">
+        var obj = RecipeModel.GetIngredients();
+
+        // Render the books using the template
+        $("#ingredientTemplate").tmpl(obj).appendTo("#testtest");
+ 
+        
+    </script>
+   -->
 
 
 </body>

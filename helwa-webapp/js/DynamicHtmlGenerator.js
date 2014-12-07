@@ -22,6 +22,23 @@ var DynamicHtmlGenerator = (function () {
             // TODO: Use document.writes / templates to populate 
             //       a list of ingredients on the webpage
 
+            $("#ingredientTemplate").tmpl(ingredients).appendTo("#ingredients_placement");
+
+            console.log(ingredients)
+            for (i in ingredients) {
+                $('#'+ingredients[i]['id']).popover({
+                    placement : 'bottom',
+                    content : '<tr>
+                                
+                                <td>
+                                    <a href="#">Test</a>
+                                </td>
+                                <td>
+                                    <a href="#">Test</a>
+                                </td>
+                            </tr>'
+                });
+            }
         }, 
 
 
