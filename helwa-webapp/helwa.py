@@ -57,20 +57,23 @@ class RecipeEnginePage(webapp2.RequestHandler):
         ##        Fetch Recipe        ##
         ################################
 
-        scrapedRecipe = Recipe(recipeUrl)
+        recipeObj = Recipe(recipeUrl)
 
-        measurementParser = MeasurementParser()
-        structuredIngredients = measurementParser.Parse(scrapedRecipe.ScrapeIngredients())
+        measurementParserObj = MeasurementParser()
+        structuredIngredients = measurementParserObj.Parse(recipeObj.ScrapeIngredients())
+        recipeObj.setStructuredIngredients(structuredIngredients)
+
+        structuredDirections = recipeObj.InitDirections()
+
         structuredIngredientsJsonString = Jsonify.ListToJsonString(structuredIngredients)
-
-        directionsJsonString = Jsonify.ListToJsonString(scrapedRecipe.ScrapeDirections())
+        structuredDirectionsJsonString = Jsonify.ListToJsonString(structuredDirections)
 
         template_values = {
             'RecipeUrl':    recipeUrl,
-            'title':        scrapedRecipe.getTitle(),
+            'title':        recipeObj.getTitle(),
             'ingredients':  structuredIngredientsJsonString,
-            'directions':   directionsJsonString,
-            'nutrition':    scrapedRecipe.getNutrition()
+            'directions':   structuredDirectionsJsonString,
+            'nutrition':    recipeObj.getNutrition()
         }
 
         template = JINJA_ENVIRONMENT.get_template('RecipeEnginePage.html')
