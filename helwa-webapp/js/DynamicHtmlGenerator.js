@@ -17,7 +17,7 @@ var DynamicHtmlGenerator = (function () {
 
     return {
 
-        CreateIngredientList: function( ingredients ) {
+        RepopulateIngredientsList: function( ingredients ) {
 
             // TODO: Use document.writes / templates to populate 
             //       a list of ingredients on the webpage
@@ -25,7 +25,7 @@ var DynamicHtmlGenerator = (function () {
         }, 
 
 
-        CreateDirectionList: function( directions ) {
+        RepopulateDirectionsList: function( directions ) {
 
             // TODO: Use document.writes / templates to populate 
             //       a list of directions on the webpage

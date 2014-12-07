@@ -14,13 +14,14 @@
     <!-- Custom Javascript -->
     <script src="/js/RecipeModel.js" type="text/javascript" ></script>
     <script src="/js/DynamicHtmlGenerator.js" type="text/javascript" ></script>
+    <script src="/js/main.js" type="text/javascript" ></script>
 </head>
 
 <body>
     <!-- Save the ingredients and directions objects in the RecipeModel -->
     <script type="text/javascript">
-        RecipeModel.SetIngredients(eval({{ ingredients }}));
-        RecipeModel.SetDirections(eval({{ directions }}));
+        ingredients = eval({{ ingredients }});
+        directions = eval({{ directions }});
     </script>
 
 
