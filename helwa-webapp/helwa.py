@@ -1,4 +1,7 @@
 # [START imports]
+import sys
+sys.path.insert(0, 'libs')
+
 import os
 import urllib
 
@@ -13,6 +16,10 @@ import jinja2
 import webapp2
 
 import logging
+
+import numpy
+from nltk import tokenize
+from nltk import tag
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -69,7 +76,20 @@ class RecipeEnginePage(webapp2.RequestHandler):
 # [END RecipeEnginePage]
 
 
+class NltkTestPage(webapp2.RequestHandler):
+    def get(self):
+
+        text = tokenize.word_tokenize("And now for something completely different")
+        tags = tag.pos_tag(text)
+        
+        logging.info(tags)
+
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.out.write(tags)
+
+
 application = webapp2.WSGIApplication([
     ('/', HomePage),
     ('/RecipeEngine', RecipeEnginePage),
+    ('/NltkTest', NltkTestPage),
 ], debug=True)
