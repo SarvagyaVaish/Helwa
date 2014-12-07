@@ -1,5 +1,18 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+
+
     <body>
         RecipeEnginePage
         <br>
@@ -12,19 +25,25 @@
 
         <b>Recipe Ingredients: </b>
         <br>
+        {{ingredients}}
+        
+        <!--
         <ul>
         {% for i in ingredients %}
         	<li>{{ i }}</li>
         {% endfor %}
-    	</ul>
+    	</ul> 
+        -->
+        <br>
 
     	<b>Recipe Directions: </b>
         <br>
-        <ul>
+        {{ directions }}
+        <!-- <ul>
         {% for i in directions %}
         	<li>{{ i }}</li>
         {% endfor %}
-    	</ul>
+    	</ul> -->
 
     	<br>
     	{% if nutrition %}

@@ -3,6 +3,8 @@ import os
 import urllib
 
 from Recipe import Recipe
+from MeasurementParser import MeasurementParser
+from Jsonify import Jsonify
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -46,14 +48,20 @@ class RecipeEnginePage(webapp2.RequestHandler):
         ##        Fetch Recipe        ##
         ################################
 
-        r = Recipe(recipeUrl)
+        scrapedRecipe = Recipe(recipeUrl)
+
+        measurementParser = MeasurementParser()
+        structuredIngredients = measurementParser.Parse(scrapedRecipe.ScrapeIngredients())
+        structuredIngredientsJsonString = Jsonify.ListToJsonString(structuredIngredients)
+
+        directionsJsonString = Jsonify.ListToJsonString(scrapedRecipe.ScrapeDirections())
 
         template_values = {
-            'RecipeUrl': recipeUrl,
-            'title': r.getTitle(),
-            'ingredients': r.ScrapeIngredients(),
-            'directions': r.ScrapeDirections(),
-            'nutrition': r.getNutrition()
+            'RecipeUrl':    recipeUrl,
+            'title':        scrapedRecipe.getTitle(),
+            'ingredients':  structuredIngredientsJsonString,
+            'directions':   directionsJsonString,
+            'nutrition':    scrapedRecipe.getNutrition()
         }
 
         template = JINJA_ENVIRONMENT.get_template('RecipeEnginePage.html')
