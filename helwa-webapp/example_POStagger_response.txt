@@ -1,0 +1,60 @@
+{
+  "result": "
+
+  Preheat/IN the/DT broiler/NN ./.\n
+
+  Lightly/JJ oil/NN the/DT broiler/NN pan/VB ./.\n
+
+  Toss/IN the/DT carrots/NNS with/IN 1/CD tablespoon/NN olive/NN oil/NN in/IN a/DT bowl/NN ,/, then/RB spread/VBN out/RP on/IN one/CD side/NN of/IN the/DT pan/NN ./.\n
+
+  Broil/NN until/IN the/DT carrots/NNS begin/VBP to/TO soften/VB ,/, 2/CD to/TO 3/CD minutes/NNS ./.\n
+
+  Meanwhile/RB ,/, whisk/VBP 2/CD tablespoons/NNS olive/VBP oil/NN ,/, the/DT honey/NN ,/, mustard/NN and/CC 1/CD tablespoon/NN lime/NN juice/NN in/IN a/DT small/JJ bowl/NN ./.\n
+
+  Brush/NNP the/DT tops/NNS and/CC sides/NNS of/IN the/DT salmon/NN with/IN the/DT glaze/NN ./.\n
+
+  Put/VB the/DT salmon/NN ,/, skin-side/JJ down/RP ,/, on/IN the/DT other/JJ side/NN of/IN the/DT broiler/NN pan/VB next/JJ to/TO the/DT carrots/NNS and/CC season/NN with/IN salt/NN and/CC pepper/NN ./.\n
+
+  Broil/NN until/IN the/DT salmon/NN is/VBZ golden/JJ brown/JJ and/CC just/RB cooked/VBN through/RP and/CC the/DT carrots/NNS are/VBP crisp-tender/JJ ,/, 5/CD to/TO 7/CD minutes/NNS ./.\n
+
+  Whisk/VB the/DT remaining/VBG 1/CD tablespoon/NN each/DT olive/JJ oil/NN and/CC lime/NN juice/NN ,/, the/DT coriander/NN ,/, cumin/NN ,/, cinnamon/NN ,/, mint/NN and/CC almonds/NNS in/IN a/DT bowl/NN ./.\n
+
+  Add/VB the/DT carrots/NNS and/CC toss/VB to/TO combine/VB ;/: season/NN with/IN salt/NN and/CC pepper/NN ./.\n
+
+  Serve/IN the/DT salmon/NN with/IN the/DT carrots/NNS and/CC lime/NN wedges/NNS ./."
+}
+
+
+pan
+spread
+begin
+soften
+whisk
+olive
+Put
+pan
+is
+cooked
+are
+Whisk
+remaining
+Add
+toss
+combine
+
+{
+	'id': 12,
+	'sentence': "Broil/NN until/IN the/DT salmon/NN is/VBZ golden/JJ brown/JJ",
+	'action-nodes': [
+		{
+			'verb': "Broil",
+			'ingredients': [<list of ingredient ids>],
+			'cookware': [<list of cookware ids>]
+		},
+		{
+			'verb': "Broil",
+			'ingredients': [<list of ingredient ids>],
+			'cookware': [<list of cookware ids>]
+		}
+	]
+}

@@ -17,7 +17,7 @@ import webapp2
 
 import logging
 
-from google.appengine.api import urlfetch
+# from google.appengine.api import urlfetch
 
 # import numpy
 # from nltk import tokenize
@@ -81,23 +81,7 @@ class RecipeEnginePage(webapp2.RequestHandler):
 class NltkTestPage(webapp2.RequestHandler):
     def get(self):
 
-        url = "https://textanalysis.p.mashape.com/nltk-pos-tagging"
-
-        form_fields = {
-            "text": "This is english pos tagger test"
-        }
-
-        form_data = urllib.urlencode(form_fields)
-        result = urlfetch.fetch(url=url,
-        payload=form_data,
-        method=urlfetch.POST,
-        headers={
-            "X-Mashape-Key": "",
-            "Content-Type": "application/x-www-form-urlencoded"
-            })
-
-        logging.info(result.content)
-
+        
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write("hello world")
 
