@@ -10,47 +10,40 @@
 
     <!-- Bootstrap JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Custom Javascript -->
+    <script src="/js/RecipeModel.js" type="text/javascript" ></script>
 </head>
 
-
-    <body>
-        RecipeEnginePage
-        <br>
-        <b>{{ RecipeUrl }}</b>
-        <br>
-        <br>
-        <b>Recipe Title:</b> {{ title }}
-        <br>
-        <br>
-
-        <b>Recipe Ingredients: </b>
-        <br>
-        {{ingredients}}
-        
-        <!--
-        <ul>
-        {% for i in ingredients %}
-        	<li>{{ i }}</li>
-        {% endfor %}
-    	</ul> 
-        -->
-        <br>
-
-    	<b>Recipe Directions: </b>
-        <br>
-        {{ directions }}
-        <!-- <ul>
-        {% for i in directions %}
-        	<li>{{ i }}</li>
-        {% endfor %}
-    	</ul> -->
-
-    	<br>
-    	{% if nutrition %}
-        <b>Nutrition:</b> {{ nutrition }}
-        {% endif %}
-        
+<body>
+    <!-- Save the ingredients and directions objects in the RecipeModel -->
+    <script type="text/javascript">
+        RecipeModel.SetIngredients(eval({{ ingredients }}));
+        RecipeModel.SetDirections(eval({{ directions }}));
+    </script>
 
 
-    </body>
+
+    RecipeEnginePage
+    <br>
+
+    <b>{{ RecipeUrl }}</b>
+    <br>
+
+    <b>Recipe Title:</b> {{ title }}
+    <br>
+
+    <b>Recipe Ingredients: </b>
+    <br>
+
+	<b>Recipe Directions: </b>
+    <br>
+
+	{% if nutrition %}
+    <b>Nutrition:</b> {{ nutrition }}
+    {% endif %}
+    
+
+
+</body>
 </html>
