@@ -15,8 +15,6 @@ var DynamicHtmlGenerator = (function () {
     //     console.log( foo );
     // };
 
-    // http://stackoverflow.com/questions/8999210/how-do-i-call-a-jquery-function-on-submitting-a-form
-
     return {
 
         RepopulateIngredientsList: function( ingredients ) {
