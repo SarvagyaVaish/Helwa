@@ -45,8 +45,11 @@
 
 
 	<b>Recipe Directions: </b>
+    <ul id="directions_placement">
+
+    </ul>
     <p>
-    {{ directions }}
+    <!-- {{ directions }} -->
     </p>
     <br>
 
@@ -57,6 +60,10 @@
         
     <script id="ingredientTemplate" type="text/x-jQuery-tmpl">
         <li><a class="btn btn-default" id=${id} data-toggle="popover" data-html="true" data-container="body"> ${amount} ${unit} ${name} </a></li>
+    </script>
+
+    <script id="directionTemplate" type="text/x-jQuery-tmpl">
+        <li><a class="btn btn-default" id=${id} data-toggle="popover" data-html="true" data-container="body"> ${prettySentence} </a></li>
     </script>
     
     <!--

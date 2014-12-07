@@ -27,7 +27,7 @@ var DynamicHtmlGenerator = (function () {
 
             $("#ingredientTemplate").tmpl(ingredients).appendTo("#ingredients_placement");
 
-            console.log(ingredients)
+            // console.log(ingredients)
             for (i in ingredients) {
                 $('#'+ingredients[i]['id']).popover({
                     placement : 'bottom',
@@ -50,8 +50,25 @@ var DynamicHtmlGenerator = (function () {
             // TODO: Use document.writes / templates to populate 
             //       a list of directions on the webpage
 
-        }
+            // Delete existing list items
+            $("#directions_placement").empty();
 
+            $("#directionTemplate").tmpl(directions).appendTo("#directions_placement");
+
+            console.log(directions)
+            for (i in directions) {
+                $('#'+directions[i]['id']).popover({
+                    placement : 'bottom',
+                    content : '<form class="form-inline" id="' + directions[i]['id'] + '">' +
+                                '<table class="table table-bordered"><tr>' + 
+                                '<td><input type="text" size="50" class="form-control" id="prettySentence' + directions[i]['id'] + '" value="' + directions[i]['prettySentence'] + '"> </td>' + 
+                                '<td><button type="button" class="btn btn-default updateIngredientButton" ' + 
+                                'onClick=\'UpdateDirection("' + directions[i]['id'] + 
+                                '")\'>Save</button>' +
+                                '</td></tr></table>'
+                });
+            }
+        }
 
         // 
         //  Template Code For Reference

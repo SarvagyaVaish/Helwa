@@ -41,12 +41,21 @@ var RecipeModel = (function () {
         },
 
         UpdateIngredients: function(id, amount, unit, name) {
-            console.log(m_Ingredients);
+            // console.log(m_Ingredients);
             for (i in m_Ingredients) {
                 if ( id == m_Ingredients[i]['id']) {
                     m_Ingredients[i]['amount'] = amount;
                     m_Ingredients[i]['unit'] = unit;
                     m_Ingredients[i]['name'] = name;
+                }
+            }
+        },
+
+        UpdateDirections: function(id, prettySentence) {
+            // console.log(m_Directions);
+            for (i in m_Directions) {
+                if ( id == m_Directions[i]['id']) {
+                    m_Directions[i]['prettySentence'] = prettySentence;
                 }
             }
         }

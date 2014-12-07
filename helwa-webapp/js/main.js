@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 	// Save the ingredients and directions in the RecipeModel
 	RecipeModel.SetIngredients(ingredients);
-    // RecipeModel.SetDirections(directions);
+    RecipeModel.SetDirections(directions);
 
     // Populate the ingredients list
     DynamicHtmlGenerator.RepopulateIngredientsList(RecipeModel.GetIngredients());
@@ -24,3 +24,17 @@ function UpdateIngredient(id) {
 
     return false;
 }
+
+function UpdateDirection(id) {
+    prettySentence = $('#prettySentence'+id).val();
+    // console.log(prettySentence);
+    RecipeModel.UpdateDirections(id, prettySentence);
+    $('#'+id).popover('hide');
+
+    // RePopulate the ingredients list
+    DynamicHtmlGenerator.RepopulateDirectionsList(RecipeModel.GetDirections());
+
+    return false;
+}
+
+
