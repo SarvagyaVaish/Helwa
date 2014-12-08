@@ -16,13 +16,15 @@
     <script src="/js/RecipeModel.js" type="text/javascript" ></script>
     <script src="/js/DynamicHtmlGenerator.js" type="text/javascript" ></script>
     <script src="/js/main.js" type="text/javascript" ></script>
+    <!-- <script src="/js/mermaid.full.js"></script> -->
+    <script src="/js/build.js"></script>
 </head>
 
 <body>
     <!-- Save the ingredients and directions objects in the RecipeModel -->
     <script type="text/javascript">
-        ingredients = eval({{ ingredients }});
-        directions = eval({{ directions }});
+    ingredients = eval({{ ingredients }});
+    directions = eval({{ directions }});
     </script>
 
 
@@ -30,42 +32,72 @@
     RecipeEnginePage
     <br>
 
-    <b>{{ RecipeUrl }}</b>
-    <br>
+    <!-- The editor for storing the markup -->
+    <textarea class="editor">
+graph LR;
+C-->F;
+F-->I;
+A---B;
+B-->C((C));
+D---E;
+E-->F((F));
+G---H;
+H-->I((I));  
+   </textarea>
 
-    <b>Recipe Title:</b> {{ title }}
-    <br>
+   <!-- Refresh button -->
+   <button class="button">Generate</button>
 
-    <b>Recipe Ingredients: </b>
-    <ul id="ingredients_placement">
+   <!-- Visualization Area -->
+   <div class="group mermaid">
+graph LR;
+C-->F;
+F-->I;
+A---B;
+B-->C((C));
+D---E;
+E-->F((F));
+G---H;
+H-->I((I));  
+   </div>
 
- 	</ul>
-    
-    <br>
+
+   <b>{{ RecipeUrl }}</b>
+   <br>
+
+   <b>Recipe Title:</b> {{ title }}
+   <br>
+
+   <b>Recipe Ingredients: </b>
+   <ul id="ingredients_placement">
+
+   </ul>
+
+   <br>
 
 
-	<b>Recipe Directions: </b>
-    <ul id="directions_placement">
+   <b>Recipe Directions: </b>
+   <ul id="directions_placement">
 
-    </ul>
-    <p>
+   </ul>
+   <p>
     <!-- {{ directions }} -->
-    </p>
-    <br>
+</p>
+<br>
 
-	{% if nutrition %}
-    <b>Nutrition:</b> {{ nutrition }}
-    {% endif %}
-    
-        
-    <script id="ingredientTemplate" type="text/x-jQuery-tmpl">
-        <li><a class="btn btn-default" id=${id} data-toggle="popover" data-html="true" data-container="body"> ${amount} ${unit} ${name} </a></li>
-    </script>
+{% if nutrition %}
+<b>Nutrition:</b> {{ nutrition }}
+{% endif %}
 
-    <script id="directionTemplate" type="text/x-jQuery-tmpl">
-        <li><a class="btn btn-default" id=${id} data-toggle="popover" data-html="true" data-container="body"> ${prettySentence} </a></li>
-    </script>
-    
+
+<script id="ingredientTemplate" type="text/x-jQuery-tmpl">
+<li><a class="btn btn-default" id=${id} data-toggle="popover" data-html="true" data-container="body"> ${amount} ${unit} ${name} </a></li>
+</script>
+
+<script id="directionTemplate" type="text/x-jQuery-tmpl">
+<li><a class="btn btn-default" id=${id} data-toggle="popover" data-html="true" data-container="body"> ${prettySentence} </a></li>
+</script>
+
     <!--
     <script type="text/javascript">
         var obj = RecipeModel.GetIngredients();
@@ -75,7 +107,7 @@
  
         
     </script>
-   -->
+-->
 
 
 </body>
