@@ -72,8 +72,60 @@ var DynamicHtmlGenerator = (function () {
 
         RepopulateGraph: function ( ingredients, directions ) {
 
-            // TODO: Use the current list of ingredients and directions to construct a graph and update the mermaid div
-            var text = 'graph LR;\n' +
+            // TODO: Use the current list of ingredients and directions to construct a graph 
+            //          and update the mermaid div
+            // 
+            
+            var graphString = "graph LR;\n";    // init graph string
+            // var verbNodes = [];
+            var verbNodes = ""; //directions[0]['action-nodes'][0]['verb'];
+
+            var everyTwo = 0;
+            var lastverb = "";
+            var skipFirstWord = 0;
+            // console.log(lastverb);
+
+            // Build verbs first
+            for (i in directions) {
+                // skipFistWord = (verbNodes == "") ? 1 : 0;
+                for (j in directions[i]['action-nodes']) {
+                    // console.log(j);
+                    // console.log(directions[i]['action-nodes'].length - 1);
+                    // if( j != directions[i]['action-nodes'].length){
+
+                        // ######################################   BROKEN ################################### \\
+                        if ( i == 0 && j == 0){
+                            verbNodes = (everyTwo % 2 == 1 || i == directions.length-1  ? ';\n' : '-->' );
+                            lastverb =  directions[i]['action-nodes'][j]['verb'];
+                                    everyTwo = everyTwo + 1;
+                        }
+                        verbNodes = verbNodes + lastverb + (everyTwo % 2 == 1 || i == directions.length-1  ? ';\n' : '-->' ) + 
+                                    directions[i]['action-nodes'][j]['verb'];
+                                    // Messy ternary: put a connection or a newline for everyother verb
+                                    //      In case you are at the last verb, just end it. 
+                                    // TODO: Should we check for the second to last verb and just put the last three together?
+                                    //      Or just attach it to the second to last verb?
+                                    lastverb =  directions[i]['action-nodes'][j]['verb'];
+                                    everyTwo = everyTwo + 1;
+                    // }
+                        // ######################################   BROKEN ################################### \\
+                }
+            }
+            
+            console.log(">>>>>>> verbNodes: ");
+            console.log(verbNodes);
+
+            // graphString = graphString + verbNodes;
+            console.log(graphString);
+
+            // Example structure. Circles are verbs, e.g. 
+            //                                ingred1 --- ingred2 ---> ((verb))  
+            //                                                               \ 
+            //                          ingred3 --- ingred4 --- ingred5 ---> ((verb))
+            //                                                               /
+            //                                              ingred6 ---> ((verb))
+
+            graphString = 'graph LR;\n' +
                             'C-->F;\n' +
                             'F-->I;\n' +
                             'A---B;\n' +
@@ -82,7 +134,7 @@ var DynamicHtmlGenerator = (function () {
                             'E-->F((F));\n' +
                             'G---H;\n' +
                             'H-->I((I));';
-            $('.mermaid').append(text);
+            $('.mermaid').append(graphString);
         }
 
         // 
