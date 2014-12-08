@@ -10,6 +10,9 @@ $(document).ready(function(){
     // Populate the directions list
     DynamicHtmlGenerator.RepopulateDirectionsList(RecipeModel.GetDirections());
 
+    // Populate the graph
+    DynamicHtmlGenerator.RepopulateGraph(RecipeModel.GetIngredients(), RecipeModel.GetDirections());    
+
 })
 	
 function UpdateIngredient(id) {
@@ -36,5 +39,11 @@ function UpdateDirection(id) {
 
     return false;
 }
+
+// function UpdateGraph(){
+
+    // TODO: 
+
+// }
 
 

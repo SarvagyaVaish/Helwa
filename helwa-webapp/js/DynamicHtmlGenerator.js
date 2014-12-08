@@ -68,6 +68,21 @@ var DynamicHtmlGenerator = (function () {
                                 '</td></tr></table>'
                 });
             }
+        }, 
+
+        RepopulateGraph: function ( ingredients, directions ) {
+
+            // TODO: Use the current list of ingredients and directions to construct a graph and update the mermaid div
+            var text = 'graph LR;\n' +
+                            'C-->F;\n' +
+                            'F-->I;\n' +
+                            'A---B;\n' +
+                            'B-->C((C));\n' +
+                            'D---E;\n' +
+                            'E-->F((F));\n' +
+                            'G---H;\n' +
+                            'H-->I((I));';
+            $('.mermaid').append(text);
         }
 
         // 
