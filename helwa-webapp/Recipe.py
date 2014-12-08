@@ -4,6 +4,7 @@ sys.path.insert(0, 'libs')
 from bs4 import BeautifulSoup, element, NavigableString
 import urllib, urllib2, re, logging, ast
 
+import pprint
 from google.appengine.api import urlfetch
 
 class Recipe:
@@ -16,6 +17,7 @@ class Recipe:
     m_TaggedDirectionString = ""
     m_Page = ""
     m_StructuredIngredients = []
+    m_BlacklistedVerbs = ['are', 'is', 'begin', 'lime', 'golden', 'remaining', 'cooked']
 
     # Pattern used to find verbs
     m_VerbPattern = re.compile(r"(\w*)/VB")
@@ -91,12 +93,11 @@ class Recipe:
 
     # Return tagged directions
     def RunPosTaggerOnDirections(self):
-        apiUrl = "https://textanalysis.p.mashape.com/nltk-pos-tagging"
 
+        # apiUrl = "https://textanalysis.p.mashape.com/nltk-pos-tagging"
         # form_fields = {
         #     "text": self.m_Directions
         # }
-
         # form_data = urllib.urlencode(form_fields)
         # result = urlfetch.fetch(url=apiUrl,
         #     payload=form_data,
@@ -105,8 +106,10 @@ class Recipe:
         #         "X-Mashape-Key": "",
         #         "Content-Type": "application/x-www-form-urlencoded"
         #     })
+        # logging.info(result.content)
+        # resultDict = ast.literal_eval(result.content)
 
-        result = '{"result": "Preheat/NNP the/DT broiler/NN ./. Lightly/RB oil/NN the/DT broiler/NN pan/NN ./. Toss/NNP the/DT carrots/NNS with/IN 1/CD tablespoon/NN olive/JJ oil/NN in/IN a/DT bowl/NN ,/, then/RB spread/VB out/RP on/IN one/CD side/NN of/IN the/DT pan/NN ./. Broil/NNP until/IN the/DT carrots/NNS begin/VBP to/TO soften/VB ,/, 2/CD to/TO 3/CD minutes.Meanwhile/JJ ,/, whisk/NN 2/CD tablespoons/NNS olive/JJ oil/NN ,/, the/DT honey/NN ,/, mustard/NN and/CC 1/CD tablespoon/NN lime/NN juice/NN in/IN a/DT small/JJ bowl/NN ./. Brush/NNP the/DT tops/NNS and/CC sides/NNS of/IN the/DT salmon/NN with/IN the/DT glaze/NN ./. Put/NNP the/DT salmon/NN ,/, skin-side/JJ down/IN ,/, on/IN the/DT other/JJ side/NN of/IN the/DT broiler/NN pan/NN next/IN to/TO the/DT carrots/NNS and/CC season/NN with/IN salt/NN and/CC pepper/NN ./. Broil/NNP until/IN the/DT salmon/NN is/VBZ golden/VBN brown/RP and/CC just/RB cooked/VBD through/IN and/CC the/DT carrots/NNS are/VBP crisp-tender/JJ ,/, 5/CD to/TO 7/CD minutes. Whisk/JJ the/DT remaining/VBG 1/CD tablespoon/NN each/DT olive/JJ oil/NN and/CC lime/NN juice/NN ,/, the/DT coriander/NN ,/, cumin/NN ,/, cinnamon/NN ,/, mint/NN and/CC almonds/NNS in/IN a/DT bowl/NN ./. Add/NNP the/DT carrots/NNS and/CC toss/NN to/TO combine/VB ;/: season/NN with/IN salt/NN and/CC pepper/NN ./. Serve/NNP the/DT salmon/NN with/IN the/DT carrots/NNS and/CC lime/VB wedges/NNS ./."}'
+        result = '{"result": "Preheat/NNP the/DT broiler/NN ./. Lightly/RB oil/NN the/DT broiler/NN pan/NN ./. Toss/NNP the/DT carrots/NNS with/IN 1/CD tablespoon/NN olive/JJ oil/NN in/IN a/DT bowl/NN ,/, then/RB spread/VB out/RP on/IN one/CD side/NN of/IN the/DT pan/NN ./. Broil/NNP until/IN the/DT carrots/NNS begin/VBP to/TO soften/VB ,/, 2/CD to/TO 3/CD minutes/NNS ./. Meanwhile/NNP ,/, whisk/NN 2/CD tablespoons/NNS olive/JJ oil/NN ,/, the/DT honey/NN ,/, mustard/NN and/CC 1/CD tablespoon/NN lime/NN juice/NN in/IN a/DT small/JJ bowl/NN ./. Brush/NNP the/DT tops/NNS and/CC sides/NNS of/IN the/DT salmon/NN with/IN the/DT glaze/NN ./. Put/NNP the/DT salmon/NN ,/, skin-side/JJ down/IN ,/, on/IN the/DT other/JJ side/NN of/IN the/DT broiler/NN pan/NN next/IN to/TO the/DT carrots/NNS and/CC season/NN with/IN salt/NN and/CC pepper/NN ./. Broil/NNP until/IN the/DT salmon/NN is/VBZ golden/VBN brown/RP and/CC just/RB cooked/VBD through/IN and/CC the/DT carrots/NNS are/VBP crisp-tender/JJ ,/, 5/CD to/TO 7/CD minutes/NNS ./. Whisk/NNP the/DT remaining/VBG 1/CD tablespoon/NN each/DT olive/JJ oil/NN and/CC lime/NN juice/NN ,/, the/DT coriander/NN ,/, cumin/NN ,/, cinnamon/NN ,/, mint/NN and/CC almonds/NNS in/IN a/DT bowl/NN ./. Add/NNP the/DT carrots/NNS and/CC toss/NN to/TO combine/VB ;/: season/NN with/IN salt/NN and/CC pepper/NN ./. Serve/NNP the/DT salmon/NN with/IN the/DT carrots/NNS and/CC lime/VB wedges/NNS ./."}'
         resultDict = ast.literal_eval(result)
         
         self.m_TaggedDirectionString = resultDict["result"]
@@ -145,13 +148,14 @@ class Recipe:
             matchResultsIt = self.m_VerbPattern.finditer(directionString)
             foundVerbFlag = False
             for matchResult in matchResultsIt:
-                foundVerbFlag = True
                 verb = matchResult.group(1)
-                newActionNode = { 
-                    "verb": verb,
-                    "ingredientIds": []
-                }
-                directionDict['action-nodes'].append(newActionNode)
+                if (verb not in self.m_BlacklistedVerbs):
+                    foundVerbFlag = True
+                    newActionNode = { 
+                        "verb": verb,
+                        "ingredientIds": []
+                    }
+                    directionDict['action-nodes'].append(newActionNode)
 
             # If no verb was found, use the first word of the sentence
             if not foundVerbFlag:
@@ -182,7 +186,7 @@ class Recipe:
             ingredientString = ingredient["name"]
             ingredientWords = re.split(r" |,|\.|'", ingredientString)
             for word in ingredientWords:
-                if len(word) >= 3:
+                if len(word) > 3:   # TODO: This is a hack to get rid of 'and', 'the', etc
                     ingredientMap[ingredient["id"]].append(word.lower())
 
         logging.info(ingredientMap)
@@ -215,8 +219,9 @@ class Recipe:
                         self.m_SplitDirections[i]["action-nodes"][minId]['ingredientIds'].append(ingredientId)
                         break # to avoid duplicates
 
+            pp = pprint.PrettyPrinter(indent=4)
             logging.info("####    Associated Ingredients Results    ####")
-            logging.info(self.m_SplitDirections[i])
+            logging.info(pp.pformat(self.m_SplitDirections[i]))
 
         return
 
