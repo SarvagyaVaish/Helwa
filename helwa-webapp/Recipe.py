@@ -43,11 +43,16 @@ class Recipe:
     # Scrape a Recipe's Ingredients
     # Returns a list of ingredients in plain text
     def ScrapeIngredients(self):
-        ingredients = Recipe.soup.findAll('li', attrs={"itemprop": "ingredients"}, text=True)
+        ingredients = Recipe.soup.findAll('li', attrs={"itemprop": "ingredients"})
         arr = []
         for ingredient in ingredients:
-            arr.append(ingredient.string)
+            arr.append(self.strip_tags(ingredient, ['a']).getText())
         self.m_Ingredients = arr
+
+        logging.info('##############################################')
+        logging.info(arr)
+        logging.info('##############################################')
+
         return arr
 
     # Scape a Recipe's Directions - for foodnetwork.com

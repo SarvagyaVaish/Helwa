@@ -22,6 +22,26 @@ def strip_tags(snippet, invalid_tags):
 
     return snippet
 
+
+ingredients = soup.findAll('li', attrs={"itemprop": "ingredients"})
+print ingredients
+print strip_tags(ingredients[0], ['a'])
+print type(ingredients[0])
+print ingredients[1]
+print type(ingredients[1])
+
+
+arr = []
+for ingredient in ingredients:
+    # print type(ingredient)
+    arr.append(strip_tags(ingredient, ['a']).getText())
+
+print
+print
+print arr
+
+
+
 # x = soup.find(attrs={"itemprop": "recipeInstructions"}).contents[3]
 # strip_tags(x, ['a'])
 # print x.getText()
@@ -30,30 +50,3 @@ def strip_tags(snippet, invalid_tags):
 
 # print len(soup.findAll(attrs={"itemprop": "recipeInstructions"}))
 
-# Must use the 4th element in the resultant array for foodnetwork's setup
-directions = soup.find(attrs={"itemprop": "recipeInstructions"}).findAll('p')
-# print directions
-# strip_tags(directions, ['a'])
-
-nutrition = ""
-arr = []
-
-for direction in directions:
-	i = strip_tags(direction, ['a']).getText()
-	if "Calories" in i:
-		nutrition = i
-	elif "Food Network" not in i and "Photograph" not in i:
-		m = re.split('(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', i)
-		print type(m)
-		for x in m:
-			arr.append(x)
-# print soup.find(attrs={"itemprop": "recipeInstructions"}).contents
-# print directions.getText()
-
-for i in arr:
-	print i
-
-print len(arr)
-# print nutrition
-
-# print soup.find(attrs={"itemprop": "recipeInstructions"}).findAll('p')
