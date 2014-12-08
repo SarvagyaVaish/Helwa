@@ -49,10 +49,6 @@ class Recipe:
             arr.append(self.strip_tags(ingredient, ['a']).getText())
         self.m_Ingredients = arr
 
-        logging.info('##############################################')
-        logging.info(arr)
-        logging.info('##############################################')
-
         return arr
 
     # Scape a Recipe's Directions - for foodnetwork.com
@@ -60,15 +56,19 @@ class Recipe:
         # Must use the 4th element in the resultant array for foodnetwork's setup
         directions = Recipe.soup.find(attrs={"itemprop": "recipeInstructions"}).findAll('p')
         directionString = ""
+
         for direction in directions:
+
             # Get rid of the anchor tags
             direction = self.strip_tags(direction, ['a']).getText()
+
             # Save Recipe's nutritional Information, if available
             if "Calories" in direction:
                 self.nutrition = direction
+
             # Remove misc info at the bottom of directions section
             elif "Food Network" not in direction and "Photograph" not in direction and len(direction.split()) > 2:
-                directionString = directionString + direction
+                directionString = directionString + " " + direction
 
         self.m_Directions = directionString
 
@@ -182,7 +182,7 @@ class Recipe:
             ingredientString = ingredient["name"]
             ingredientWords = re.split(r" |,|\.|'", ingredientString)
             for word in ingredientWords:
-                if len(word) > 3:
+                if len(word) >= 3:
                     ingredientMap[ingredient["id"]].append(word.lower())
 
         logging.info(ingredientMap)
