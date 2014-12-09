@@ -76,46 +76,81 @@ var DynamicHtmlGenerator = (function () {
             //          and update the mermaid div
             // 
             
-            var graphString = "graph LR;\n";    // init graph string
             // var verbNodes = [];
-            var verbNodes = ""; //directions[0]['action-nodes'][0]['verb'];
 
             var everyTwo = 0;
             var lastverb = "";
             var skipFirstWord = 0;
             // console.log(lastverb);
 
-            // Build verbs first
+            // Count verbs
+            var count = 0;
             for (i in directions) {
-                // skipFistWord = (verbNodes == "") ? 1 : 0;
-                for (j in directions[i]['action-nodes']) {
-                    // console.log(j);
-                    // console.log(directions[i]['action-nodes'].length - 1);
-                    // if( j != directions[i]['action-nodes'].length){
+                for ( j in directions[i]['action-nodes']) {
 
-                        // ######################################   BROKEN ################################### \\
-                        if ( i == 0 && j == 0){
-                            verbNodes = (everyTwo % 2 == 1 || i == directions.length-1  ? ';\n' : '-->' );
-                            lastverb =  directions[i]['action-nodes'][j]['verb'];
-                                    everyTwo = everyTwo + 1;
-                        }
-                        verbNodes = verbNodes + lastverb + (everyTwo % 2 == 1 || i == directions.length-1  ? ';\n' : '-->' ) + 
-                                    directions[i]['action-nodes'][j]['verb'];
-                                    // Messy ternary: put a connection or a newline for everyother verb
-                                    //      In case you are at the last verb, just end it. 
-                                    // TODO: Should we check for the second to last verb and just put the last three together?
-                                    //      Or just attach it to the second to last verb?
-                                    lastverb =  directions[i]['action-nodes'][j]['verb'];
-                                    everyTwo = everyTwo + 1;
-                    // }
-                        // ######################################   BROKEN ################################### \\
+                    count++;
                 }
             }
+            console.log(count);
+
+            // Build verbs first            
+            var verbNodes = "";
+            var previousVerb = ""; 
+            for (i in directions) {
+                for (j in directions[i]['action-nodes']) {
+                    if ( previousVerb == "" ) {
+                        previousVerb = directions[i]['action-nodes'][j]['verb'];
+                    } else {
+                        var currentVerb = directions[i]['action-nodes'][j]['verb'];
+                        verbNodes = verbNodes + previousVerb + '((' + previousVerb + '))' + 
+                            '-->' + currentVerb + '((' + currentVerb + '))' + ';\n';
+                        previousVerb = currentVerb;
+                    }
+                }
+            }
+
+            function GetIngredient(id) { 
+                return id;
+            }
+
+            var previousId = -1;
+            var ingredientNodes = "";
+            var verbCounter = 0;
+            for (i in directions) {
+                for (j in directions[i]['action-nodes']) {
+                    previousId = -1;
+                    verbCounter = verbCounter + 1;
+
+                    for (k in directions[i]['action-nodes'][j]['ingredientIds']) {
+                        currentId = directions[i]['action-nodes'][j]['ingredientIds'][k];
+                        if (previousId == -1) {
+                            previousId = currentId;
+                        }
+                        else {
+                            var previousIngredient = GetIngredient(previousId);
+                            var currentIngredient = GetIngredient(currentId);
+                            ingredientNodes = ingredientNodes + previousIngredient + 'v' + verbCounter + '(' + previousIngredient + ')' + 
+                            '---' + currentIngredient + 'v' + verbCounter + '(' + currentIngredient + ');\n';
+                            previousId = currentId;
+                        }
+                    }
+                    
+                    if (previousId != -1) {
+                        // link the last ingredient to the current verb
+                        var verb = directions[i]['action-nodes'][j]['verb']
+                        var previousIngredient = GetIngredient(previousId);
+                        ingredientNodes = ingredientNodes + previousIngredient + 'v' + verbCounter + '(' + previousIngredient + ')' + 
+                        '-->' + verb + ';\n';
+                    }
+                }
+            }
+
+
             
             console.log(">>>>>>> verbNodes: ");
-            console.log(verbNodes);
+            // console.log(verbNodes);
 
-            // graphString = graphString + verbNodes;
+            var graphString = "graph LR;\n" + verbNodes + ingredientNodes;
             console.log(graphString);
 
             // Example structure. Circles are verbs, e.g. 
@@ -125,16 +160,17 @@ var DynamicHtmlGenerator = (function () {
             //                                                               /
             //                                              ingred6 ---> ((verb))
 
-            graphString = 'graph LR;\n' +
-                            'C-->F;\n' +
-                            'F-->I;\n' +
-                            'A---B;\n' +
-                            'B-->C((C));\n' +
-                            'D---E;\n' +
-                            'E-->F((F));\n' +
-                            'G---H;\n' +
-                            'H-->I((I));';
-            $('.mermaid').append(graphString);
+            // graphString = 'graph LR;\n' +
+            //                 'C-->F;\n' +
+            //                 'F-->I;\n' +
+            //                 'A---B;\n' +
+            //                 'B-->C((C));\n' +
+            //                 'D---E;\n' +
+            //                 'E-->F((F));\n' +
+            //                 'G---H;\n' +
+            //                 'H-->I((I));';
+            $('.mermaid').empty();
+            $('.mermaid').html(graphString);
         }
 
         // 
